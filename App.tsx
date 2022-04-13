@@ -30,7 +30,9 @@ const App = () => {
             <Pressable onPress={ToGitHub}>
               <View style={styles.name}>
                 <Text style={{ color: 'white' }}>
-                  Created by Kelvin Tam w/ React Native Web
+                  Created by{' '}
+                  <Text style={{ fontWeight: 'bold' }}>Kelvin Tam</Text> w/{' '}
+                  <Text style={{ fontWeight: 'bold' }}>React Native</Text>
                 </Text>
                 <Image
                   style={styles.tinyLogo}
@@ -66,18 +68,17 @@ const styles = StyleSheet.create({
   },
   titleText: {
     color: 'white',
-    fontSize: 50,
+    fontSize: 38,
     fontWeight: 'bold',
+    paddingVertical: 5,
   },
   tinyLogo: {
     width: 60,
     height: 30,
-    marginLeft: 10,
   },
   name: {
     marginTop: -5,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: 'column',
   },
 })
 export default App

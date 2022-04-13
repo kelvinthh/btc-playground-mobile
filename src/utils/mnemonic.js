@@ -1,6 +1,6 @@
 import '../../shim.js'
 import crypto from "crypto";
-import bip39 from "bip39";
+import bip39 from "react-native-bip39";
 
 export function generateMnemonic(wordCount) {
   // Word count can be any of 12, 15, 18, 21, 24
