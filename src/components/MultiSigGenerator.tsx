@@ -41,6 +41,7 @@ export default function MultiSegP2SHGenerator() {
 
     let re = /[0-9A-Fa-f]{6}/g
     for (let i = 0; i < _pubKeys.length; i++) {
+      _pubKeys[i] = _pubKeys[i].trim();
       if (!re.test(_pubKeys[i])) {
         setErrorText('Please enter ' + nValue + ' valid public key(s)!')
         return
