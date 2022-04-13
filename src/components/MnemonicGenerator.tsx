@@ -1,35 +1,41 @@
-import { View, Text, KeyboardAvoidingView, ImageBackground, Pressable, TextInput, StyleSheet, Modal } from 'react-native'
+import {
+  View,
+  Text,
+  KeyboardAvoidingView,
+  ImageBackground,
+  Pressable,
+  TextInput,
+  StyleSheet,
+  Modal,
+} from 'react-native'
 import React, { useState } from 'react'
-import * as Mnemonic from "../utils/mnemonic"
+import * as Mnemonic from '../utils/mnemonic'
 
-let invalidInput = false;
-
+let invalidInput = false
 
 export default function MnemonicGenerator() {
-  const [wordCount, setWordCount] = useState("");
-  const [resultText, setResultText] = useState("");
-  const [errorText, setErrorText] = useState("");
-  const [modalVisible, setModalVisible] = useState(false);
+  const [wordCount, setWordCount] = useState('')
+  const [resultText, setResultText] = useState('')
+  const [errorText, setErrorText] = useState('')
+  const [modalVisible, setModalVisible] = useState(false)
 
   const getWordCount = () => {
-
     try {
       // Check if input is a number and within range
       if (!isNaN(+wordCount) && +wordCount >= 12 && +wordCount <= 24) {
-        invalidInput = false;
-        setModalVisible(true);
-        setResultText(Mnemonic.generateMnemonic(wordCount));
-        setWordCount("");
-        setErrorText("");
-      }
-      else {
-        invalidInput = true;
-        setWordCount("");
-        setErrorText("Invalid input. Please enter a number from 12 to 24!");
+        invalidInput = false
+        setModalVisible(true)
+        setResultText(Mnemonic.generateMnemonic(wordCount))
+        setWordCount('')
+        setErrorText('')
+      } else {
+        invalidInput = true
+        setWordCount('')
+        setErrorText('Invalid input. Please enter a number from 12 to 24!')
       }
     } catch (error) {
-      setErrorText(String(error));
-      console.log(error);
+      setErrorText(String(error))
+      console.log(error)
     }
   }
   return (
@@ -39,17 +45,20 @@ export default function MnemonicGenerator() {
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
+          setModalVisible(!modalVisible)
+        }}>
         <View style={styles.modal}>
           <Text style={styles.contentText}>Here's your words:</Text>
           <Text style={styles.resultText}>{resultText}</Text>
-          <Pressable onPress={() => {
-            setModalVisible(false);
-            setResultText("15");
-          }}>
-            <Text style={[styles.buttonText, { marginVertical: 10 }]}>OK!</Text>
+          <Pressable
+            onPress={() => {
+              //Clipboard.setString(resultText);
+              setModalVisible(false)
+              setResultText('15')
+            }}>
+            <Text style={[styles.buttonText, { marginVertical: 10 }]}>
+              OK!
+            </Text>
           </Pressable>
         </View>
       </Modal>
@@ -60,8 +69,8 @@ export default function MnemonicGenerator() {
           style={styles.input}
           onChangeText={setWordCount}
           value={wordCount}
-          placeholder="Enter word count (from 12 to 24)"
-          keyboardType="numeric"
+          placeholder='Enter word count (from 12 to 24)'
+          keyboardType='numeric'
         />
       </View>
       <Pressable onPress={getWordCount}>
@@ -78,46 +87,46 @@ const shawdows = {
 const styles = StyleSheet.create({
   content: {
     //textAlign: "center",
-    flexDirection: "column",
-    alignItems: "center",
-    backgroundColor: "#000000a0",
-    width: 450,
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: '#000000a0',
+    width: 330,
     paddingVertical: 50,
     marginBottom: 15,
-    borderRadius: 15
+    borderRadius: 15,
   },
   contentText: {
-    color: "white",
-    fontSize: 24,
-    fontWeight: "bold",
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   buttonText: {
-    color: "white",
+    color: 'white',
     fontSize: 18,
-    backgroundColor: "blue",
+    backgroundColor: 'blue',
     borderRadius: 10,
     padding: 10,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
     shadowOpacity: 0.5,
     shadowRadius: 10,
   },
   resultText: {
     marginTop: 5,
-    textAlign: "center",
+    textAlign: 'center',
     flexWrap: 'wrap',
     fontSize: 18,
-    fontWeight: "bold",
-    color: 'yellow'
+    fontWeight: 'bold',
+    color: 'yellow',
   },
   errorText: {
     marginTop: 5,
-    textAlign: "center",
+    textAlign: 'center',
     flexWrap: 'wrap',
-    color: 'red'
+    color: 'red',
   },
   input: {
-    width: 315,
+    width: 250,
     height: 40,
     margin: 12,
     borderWidth: 1,
@@ -129,16 +138,14 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
   },
   modal: {
-    backgroundColor: "#000000e0",
-    borderColor: 'white',
-    borderWidth: 5,
-    width: "100%",
-    height: "100%",
+    backgroundColor: '#000000e0',
+    width: '100%',
+    height: '100%',
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 30,
     flexDirection: 'column',
-    textAlign: "center"
-  }
+    textAlign: 'center',
+  },
 })

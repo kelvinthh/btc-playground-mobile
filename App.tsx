@@ -7,6 +7,7 @@ import {
   Platform,
   Pressable,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -23,9 +24,11 @@ const ToGitHub = () =>
 
 const App = () => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ImageBackground source={image} resizeMode='cover' style={styles.image}>
-        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.content}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.content}>
           <View style={{ marginBottom: 50 }}>
             <Text style={styles.titleText}>BitCoin Playground</Text>
             <Pressable onPress={ToGitHub}>
@@ -42,11 +45,13 @@ const App = () => {
               </View>
             </Pressable>
           </View>
-          <MnemonicGenerator />
-          {/* <AddressGenerator /> */}
+          <ScrollView>
+            <MnemonicGenerator />
+            <AddressGenerator />
+          </ScrollView>
         </KeyboardAvoidingView>
       </ImageBackground>
-    </View>
+    </SafeAreaView>
   )
 }
 const styles = StyleSheet.create({
@@ -54,6 +59,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     height: '100%',
+    backgroundColor: 'black',
   },
   image: {
     flex: 1,

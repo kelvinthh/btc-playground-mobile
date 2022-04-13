@@ -40,20 +40,20 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "center",
         backgroundColor: "#000000a0",
-        width: 450,
+        width: 330,
         paddingVertical: 50,
         marginBottom: 15,
         borderRadius: 15
     },
     contentText: {
         color: "white",
-        fontSize: 24,
+        fontSize: 20,
         fontWeight: "bold",
     },
     buttonGroup: {
-        flexDirection: 'row',
+        flexDirection: 'column',
         marginVertical: 15,
-        justifyContent: 'space-around'
+        justifyContent: 'space-between'
     },
     buttonText: {
         color: "white",
@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         shadowOpacity: 0.5,
         shadowRadius: 10,
-        marginHorizontal: 5
+        marginHorizontal: 5,
+        marginBottom: 10
     }
 })

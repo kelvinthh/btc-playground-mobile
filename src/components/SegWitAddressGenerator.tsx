@@ -100,18 +100,18 @@ const styles = StyleSheet.create({
     //textAlign: "center",
     flexDirection: "column",
     alignItems: "center",
-    width: 450,
+    width: 330,
     marginTop: 30,
     borderRadius: 15
   },
   contentText: {
     color: "white",
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
   },
   buttonText: {
     color: "white",
-    fontSize: 18,
+    fontSize: 15,
     backgroundColor: "blue",
     borderRadius: 10,
     padding: 10,
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   input: {
-    width: 315,
+    width: 250,
     height: 40,
     margin: 12,
     borderWidth: 1,
@@ -156,8 +156,6 @@ const styles = StyleSheet.create({
   },
   modal: {
     backgroundColor: "#000000e0",
-    borderColor: 'white',
-    borderWidth: 5,
     width: "100%",
     height: "100%",
     alignSelf: 'center',
