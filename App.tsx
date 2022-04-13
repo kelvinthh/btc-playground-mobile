@@ -1,9 +1,11 @@
-import React, { Linking } from 'react-native'
+import React from 'react'
 import {
   Image,
   ImageBackground,
   KeyboardAvoidingView,
+  Linking,
   Pressable,
+  SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
@@ -20,15 +22,15 @@ const ToGitHub = () =>
 
 const App = () => {
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <View style={styles.container}>
       <ImageBackground source={image} resizeMode='cover' style={styles.image}>
-        <View style={styles.content}>
+        <KeyboardAvoidingView style={styles.content}>
           <View style={{ marginBottom: 50 }}>
             <Text style={styles.titleText}>BitCoin Playground</Text>
             <Pressable onPress={ToGitHub}>
               <View style={styles.name}>
                 <Text style={{ color: 'white' }}>
-                  Created by <b>Kelvin Tam</b> w/ <b>React Native Web</b>
+                  Created by Kelvin Tam w/ React Native Web
                 </Text>
                 <Image
                   style={styles.tinyLogo}
@@ -38,10 +40,10 @@ const App = () => {
             </Pressable>
           </View>
           <MnemonicGenerator />
-          <AddressGenerator />
-        </View>
+          {/* <AddressGenerator /> */}
+        </KeyboardAvoidingView>
       </ImageBackground>
-    </KeyboardAvoidingView>
+    </View>
   )
 }
 const styles = StyleSheet.create({
