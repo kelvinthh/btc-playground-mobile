@@ -4,6 +4,7 @@ import {
   ImageBackground,
   KeyboardAvoidingView,
   Linking,
+  Platform,
   Pressable,
   SafeAreaView,
   StyleSheet,
@@ -24,7 +25,7 @@ const App = () => {
   return (
     <View style={styles.container}>
       <ImageBackground source={image} resizeMode='cover' style={styles.image}>
-        <KeyboardAvoidingView style={styles.content}>
+        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.content}>
           <View style={{ marginBottom: 50 }}>
             <Text style={styles.titleText}>BitCoin Playground</Text>
             <Pressable onPress={ToGitHub}>
