@@ -1,31 +1,42 @@
-import { Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import {
+  Modal,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native'
 import React, { useState } from 'react'
-import { getSegwit } from '../utils/address';
+import { getSegwit } from '../utils/address'
+import Clipboard from '@react-native-clipboard/clipboard'
 
 export default function SegWitAddressGenerator() {
-  const [mnemonic, setMnemonic] = useState("");
-  const [seed, setSeed] = useState("");
-  const [path, setPath] = useState("");
-  const [resultText, setResultText] = useState<string | undefined>("");
-  const [errorText, setErrorText] = useState<string | undefined>("");
-  const [modalVisible, setModalVisible] = useState(false);
+  const [mnemonic, setMnemonic] = useState('')
+  const [seed, setSeed] = useState('')
+  const [path, setPath] = useState('')
+  const [resultText, setResultText] = useState<string | undefined>('')
+  const [errorText, setErrorText] = useState<string | undefined>('')
+  const [modalVisible, setModalVisible] = useState(false)
 
   const generateAddress = async () => {
-
     try {
-      let result = getSegwit(mnemonic, seed, (path === "" ? "m/44'/0'/0'/0/0" : path));   // Default m/44 path if none is specified
+      let result = getSegwit(
+        mnemonic,
+        seed,
+        path === '' ? "m/44'/0'/0'/0/0" : path,
+      ) // Default m/44 path if none is specified
       if (result.valid) {
-        setModalVisible(true);
-        setErrorText("");
-        Promise.resolve(result.data).then(value => setResultText(value?.address));
-
-      }
-      else {
-        Promise.resolve(result.errMsg).then(value => setErrorText(value));
+        setModalVisible(true)
+        setErrorText('')
+        Promise.resolve(result.data).then((value) =>
+          setResultText(value?.address),
+        )
+      } else {
+        Promise.resolve(result.errMsg).then((value) => setErrorText(value))
       }
     } catch (error) {
-      setErrorText(String(error));
-      console.log(error);
+      setErrorText(String(error))
+      console.log(error)
     }
   }
 
@@ -36,17 +47,20 @@ export default function SegWitAddressGenerator() {
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
+          setModalVisible(!modalVisible)
+        }}>
         <View style={styles.modal}>
           <Text style={styles.contentText}>Wallet address generated:</Text>
           <Text style={styles.resultText}>{resultText}</Text>
-          <Pressable onPress={() => {
-            setModalVisible(false);
-            setResultText("15");
-          }}>
-            <Text style={[styles.buttonText, { marginVertical: 10 }]}>OK!</Text>
+          <Pressable
+            onPress={() => {
+              if (resultText != undefined) Clipboard.setString(resultText)
+              setModalVisible(false)
+              setResultText('15')
+            }}>
+            <Text style={[styles.buttonText, { marginVertical: 10 }]}>
+              Copy to clipboard!
+            </Text>
           </Pressable>
         </View>
       </Modal>
@@ -54,22 +68,22 @@ export default function SegWitAddressGenerator() {
       <Text style={styles.contentText}>HD SegWit Address Generator</Text>
       <TextInput
         style={styles.input}
-        onChangeText={text => {
-          setMnemonic(text);
-          setSeed("");
+        onChangeText={(text) => {
+          setMnemonic(text)
+          setSeed('')
         }}
         value={mnemonic}
-        placeholder="Enter mnemonic words"
+        placeholder='Enter mnemonic words'
       />
       <Text style={styles.orText}>Or</Text>
       <TextInput
         style={styles.input}
-        onChangeText={text => {
-          setMnemonic("");
-          setSeed(text);
+        onChangeText={(text) => {
+          setMnemonic('')
+          setSeed(text)
         }}
         value={seed}
-        placeholder="Enter hex string seed"
+        placeholder='Enter hex string seed'
       />
       <View
         style={{
@@ -91,52 +105,51 @@ export default function SegWitAddressGenerator() {
       </Pressable>
       <Text style={styles.errorText}>{errorText}</Text>
     </View>
-
   )
 }
 
 const styles = StyleSheet.create({
   content: {
     //textAlign: "center",
-    flexDirection: "column",
-    alignItems: "center",
+    flexDirection: 'column',
+    alignItems: 'center',
     width: 330,
     marginTop: 30,
-    borderRadius: 15
+    borderRadius: 15,
   },
   contentText: {
-    color: "white",
+    color: 'white',
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   buttonText: {
-    color: "white",
+    color: 'white',
     fontSize: 15,
-    backgroundColor: "blue",
+    backgroundColor: 'blue',
     borderRadius: 10,
     padding: 10,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
     shadowOpacity: 0.5,
     shadowRadius: 10,
   },
   resultText: {
     marginTop: 5,
-    textAlign: "center",
+    textAlign: 'center',
     flexWrap: 'wrap',
     fontSize: 18,
-    fontWeight: "bold",
-    color: 'yellow'
+    fontWeight: 'bold',
+    color: 'yellow',
   },
   errorText: {
     marginTop: 5,
-    textAlign: "center",
+    textAlign: 'center',
     flexWrap: 'wrap',
-    color: 'red'
+    color: 'red',
   },
   orText: {
     marginTop: 5,
-    textAlign: "center",
+    textAlign: 'center',
     flexWrap: 'wrap',
     color: 'white',
     fontWeight: 'bold',
@@ -155,14 +168,14 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
   },
   modal: {
-    backgroundColor: "#000000e0",
-    width: "100%",
-    height: "100%",
+    backgroundColor: '#000000e0',
+    width: '100%',
+    height: '100%',
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 30,
     flexDirection: 'column',
-    textAlign: "center"
-  }
+    textAlign: 'center',
+  },
 })

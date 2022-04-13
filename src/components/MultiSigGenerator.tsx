@@ -1,58 +1,64 @@
-import { Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import {
+  Modal,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native'
 import React, { useState } from 'react'
-import { getMultiSig } from '../utils/address';
+import { getMultiSig } from '../utils/address'
+import Clipboard from '@react-native-clipboard/clipboard'
 
 export default function MultiSegP2SHGenerator() {
-  const [mValue, setMValue] = useState("");
-  const [nValue, setNValue] = useState("");
-  const [publicKeys, setPublicKeys] = useState("");
-  const [resultText, setResultText] = useState<string | undefined>("");
-  const [errorText, setErrorText] = useState("");
-  const [modalVisible, setModalVisible] = useState(false);
+  const [mValue, setMValue] = useState('')
+  const [nValue, setNValue] = useState('')
+  const [publicKeys, setPublicKeys] = useState('')
+  const [resultText, setResultText] = useState<string | undefined>('')
+  const [errorText, setErrorText] = useState('')
+  const [modalVisible, setModalVisible] = useState(false)
 
   const generateAddress = async () => {
-
     if (isNaN(+mValue) || isNaN(+nValue)) {
       setErrorText('Please enter only numeric value on m and n values.')
-      return;
+      return
     }
 
     if (+nValue < +mValue) {
       setErrorText('n value must be greater than m value.')
-      return;
+      return
     }
 
-    let _pubKeys = publicKeys.split(',');
+    let _pubKeys = publicKeys.split(',')
     if (_pubKeys.length != +nValue) {
-      setErrorText('Please enter ' + nValue + ' public keys!');
-      return;
+      setErrorText('Please enter ' + nValue + ' public keys!')
+      return
     }
 
     _pubKeys.forEach((key) => {
-      console.log('Public Key Found:', key);
+      console.log('Public Key Found:', key)
     })
 
-    let re = /[0-9A-Fa-f]{6}/g;
+    let re = /[0-9A-Fa-f]{6}/g
     for (let i = 0; i < _pubKeys.length; i++) {
       if (!re.test(_pubKeys[i])) {
-        setErrorText('Please enter ' + nValue + ' valid public key(s)!');
-        return;
+        setErrorText('Please enter ' + nValue + ' valid public key(s)!')
+        return
       }
     }
 
     try {
-      let address = getMultiSig(mValue, _pubKeys);
-      if (address != "") {
-        setModalVisible(true);
-        setErrorText("");
-        setResultText(address);
-      }
-      else {
-        setErrorText("Error generating address.");
+      let address = getMultiSig(mValue, _pubKeys)
+      if (address != '') {
+        setModalVisible(true)
+        setErrorText('')
+        setResultText(address)
+      } else {
+        setErrorText('Error generating address.')
       }
     } catch (error) {
-      setErrorText(String(error));
-      console.log(error);
+      setErrorText(String(error))
+      console.log(error)
     }
   }
 
@@ -63,17 +69,18 @@ export default function MultiSegP2SHGenerator() {
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
+          setModalVisible(!modalVisible)
+        }}>
         <View style={styles.modal}>
           <Text style={styles.contentText}>Wallet address generated:</Text>
           <Text style={styles.resultText}>{resultText}</Text>
-          <Pressable onPress={() => {
-            setModalVisible(false);
-            setResultText("15");
-          }}>
-            <Text style={[styles.buttonText, { marginVertical: 10 }]}>OK!</Text>
+          <Pressable
+            onPress={() => {
+              if (resultText != undefined) Clipboard.setString(resultText)
+              setModalVisible(false)
+              setResultText('15')
+            }}>
+            <Text style={[styles.buttonText, { marginVertical: 10 }]}>Copy to clipboard!</Text>
           </Pressable>
         </View>
       </Modal>
@@ -83,13 +90,13 @@ export default function MultiSegP2SHGenerator() {
         style={styles.input}
         onChangeText={setMValue}
         value={mValue}
-        placeholder="Enter m value"
+        placeholder='Enter m value'
       />
       <TextInput
         style={styles.input}
         onChangeText={setNValue}
         value={nValue}
-        placeholder="Enter n value"
+        placeholder='Enter n value'
       />
       <TextInput
         style={styles.input}
@@ -104,48 +111,47 @@ export default function MultiSegP2SHGenerator() {
       </Pressable>
       <Text style={styles.errorText}>{errorText}</Text>
     </View>
-
   )
 }
 
 const styles = StyleSheet.create({
   content: {
     //textAlign: "center",
-    flexDirection: "column",
-    alignItems: "center",
+    flexDirection: 'column',
+    alignItems: 'center',
     width: 330,
     marginTop: 30,
-    borderRadius: 15
+    borderRadius: 15,
   },
   contentText: {
-    color: "white",
+    color: 'white',
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   buttonText: {
-    color: "white",
+    color: 'white',
     fontSize: 18,
-    backgroundColor: "blue",
+    backgroundColor: 'blue',
     borderRadius: 10,
     padding: 10,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
     shadowOpacity: 0.5,
     shadowRadius: 10,
   },
   resultText: {
     marginTop: 5,
-    textAlign: "center",
+    textAlign: 'center',
     flexWrap: 'wrap',
     fontSize: 18,
-    fontWeight: "bold",
-    color: 'yellow'
+    fontWeight: 'bold',
+    color: 'yellow',
   },
   errorText: {
     marginTop: 5,
-    textAlign: "center",
+    textAlign: 'center',
     flexWrap: 'wrap',
-    color: 'red'
+    color: 'red',
   },
   input: {
     width: 250,
@@ -159,14 +165,14 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
   },
   modal: {
-    backgroundColor: "#000000e0",
-    width: "100%",
-    height: "100%",
+    backgroundColor: '#000000e0',
+    width: '100%',
+    height: '100%',
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 30,
     flexDirection: 'column',
-    textAlign: "center"
-  }
+    textAlign: 'center',
+  },
 })

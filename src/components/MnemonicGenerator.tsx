@@ -10,6 +10,7 @@ import {
 } from 'react-native'
 import React, { useState } from 'react'
 import * as Mnemonic from '../utils/mnemonic'
+import Clipboard from '@react-native-clipboard/clipboard'
 
 let invalidInput = false
 
@@ -52,12 +53,12 @@ export default function MnemonicGenerator() {
           <Text style={styles.resultText}>{resultText}</Text>
           <Pressable
             onPress={() => {
-              //Clipboard.setString(resultText);
+              Clipboard.setString(resultText);
               setModalVisible(false)
               setResultText('15')
             }}>
             <Text style={[styles.buttonText, { marginVertical: 10 }]}>
-              OK!
+              Copy to clipboard
             </Text>
           </Pressable>
         </View>
