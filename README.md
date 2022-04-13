@@ -1,7 +1,8 @@
 # BitCoin Playground Mobile
 
 This is mobile port of my [BitCoin Playground web app](https://github.com/kelvinthh/btc-playground).
-![demo](https://i.imgur.com/jlXXopV.png)
+
+![](https://i.imgur.com/jlXXopV.png)
 ### Features:
 1. Generate mnemonic words of your choice of length (12-24).
 2. Generate HD SegWit BitCoin wallet address with mnemonic words or hex string seed.
